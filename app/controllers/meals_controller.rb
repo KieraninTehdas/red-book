@@ -21,7 +21,19 @@ class MealsController < ApplicationController
 
   # POST /meals or /meals.json
   def create
-    @meal = Meal.new(meal_params)
+    
+    @meal_params = params[:meal]
+
+    if @meal_params[:recipe_book_name]
+      @recipe_book = RecipeBook.find_by_name(@meal_params[:recipe_book_name])
+
+      if !@recipe_book.present?
+        @recipe_book = RecipeBook.new(@meal_params[:recipe_book_name])
+        @recipe_book.save
+      end
+    end
+
+    @meal = Meal.new({:name => @meal_params[:name], :recipe_book => @recipe_book})
 
     respond_to do |format|
       if @meal.save
