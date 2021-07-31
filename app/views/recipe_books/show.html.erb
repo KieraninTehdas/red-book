@@ -5,5 +5,19 @@
   <%= @recipe_book.name %>
 </p>
 
+<table>
+  <tr>
+    <th>Meal</th>
+    <th>Page Number</th>
+  </tr>
+
+  <% @recipe_book.meals.each do |meal| %>
+    <tr>
+      <td><%= meal.name %></td>
+      <td>122</td>
+    </tr>
+  <% end %>
+</table>
+
 <%= link_to 'Edit', edit_recipe_book_path(@recipe_book) %> |
 <%= link_to 'Back', recipe_books_path %>
