@@ -17,24 +17,21 @@ class MealsController < ApplicationController
 
   # GET /meals/1/edit
   def edit
-    Rails.logger.error(@meal.recipe_book.as_json)
   end
 
   # POST /meals or /meals.json
   def create
-    
-    @meal_params = params[:meal]
 
-    if @meal_params[:recipe_book_name]
-      @recipe_book = RecipeBook.find_by_name(@meal_params[:recipe_book_name])
+    if meal_params[:recipe_book_name].present?
+      @recipe_book = RecipeBook.find_by_name(meal_params[:recipe_book_name])
 
       if !@recipe_book.present?
-        @recipe_book = RecipeBook.new(@meal_params[:recipe_book_name])
+        @recipe_book = RecipeBook.new({:name => meal_params[:recipe_book_name]})
         @recipe_book.save
       end
     end
 
-    @meal = Meal.new({:name => @meal_params[:name], :recipe_book => @recipe_book})
+    @meal = Meal.new({:name => meal_params[:name], :recipe_book => @recipe_book, :page_number => meal_params[:page_number]})
 
     respond_to do |format|
       if @meal.save
@@ -49,8 +46,17 @@ class MealsController < ApplicationController
 
   # PATCH/PUT /meals/1 or /meals/1.json
   def update
+    if meal_params[:recipe_book_name].present? && meal_params[:recipe_book_name] != @meal.recipe_book_name
+      @recipe_book = RecipeBook.find_by_name(meal_params[:recipe_book_name])
+
+      if !@recipe_book.present?
+        @recipe_book = RecipeBook.new({:name => meal_params[:recipe_book_name]})
+        @recipe_book.save
+      end
+    end
+
     respond_to do |format|
-      if @meal.update(meal_params)
+      if @meal.update({:name => meal_params[:name], :recipe_book => @recipe_book, :page_number => meal_params[:page_number]})
         format.html { redirect_to @meal, notice: "Meal was successfully updated." }
         format.json { render :show, status: :ok, location: @meal }
       else
@@ -77,6 +83,6 @@ class MealsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def meal_params
-      params.require(:meal).permit(:name)
+      params.require(:meal)
     end
 end
