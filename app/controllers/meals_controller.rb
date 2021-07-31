@@ -23,12 +23,7 @@ class MealsController < ApplicationController
   def create
 
     if meal_params[:recipe_book_name].present?
-      @recipe_book = RecipeBook.find_by_name(meal_params[:recipe_book_name])
-
-      if !@recipe_book.present?
-        @recipe_book = RecipeBook.new({:name => meal_params[:recipe_book_name]})
-        @recipe_book.save
-      end
+      @recipe_book = find_or_create_recipe_book(meal_params[:recipe_book_name])
     end
 
     @meal = Meal.new({:name => meal_params[:name], :recipe_book => @recipe_book, :page_number => meal_params[:page_number]})
@@ -46,14 +41,12 @@ class MealsController < ApplicationController
 
   # PATCH/PUT /meals/1 or /meals/1.json
   def update
+    @recipe_book = @meal.recipe_book
     if meal_params[:recipe_book_name].present? && meal_params[:recipe_book_name] != @meal.recipe_book_name
-      @recipe_book = RecipeBook.find_by_name(meal_params[:recipe_book_name])
-
-      if !@recipe_book.present?
-        @recipe_book = RecipeBook.new({:name => meal_params[:recipe_book_name]})
-        @recipe_book.save
-      end
+      @recipe_book = find_or_create_recipe_book(meal_params[:recipe_book_name])
     end
+
+    Rails.logger.error(@recipe_book.as_json)
 
     respond_to do |format|
       if @meal.update({:name => meal_params[:name], :recipe_book => @recipe_book, :page_number => meal_params[:page_number]})
@@ -76,6 +69,17 @@ class MealsController < ApplicationController
   end
 
   private
+    def find_or_create_recipe_book(recipe_book_name)
+      @recipe_book = RecipeBook.find_by_name(meal_params[:recipe_book_name])
+
+      if !@recipe_book.present?
+        @recipe_book = RecipeBook.new({:name => meal_params[:recipe_book_name]})
+        @recipe_book.save
+      end
+      
+      return @recipe_book
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_meal
       @meal = Meal.find(params[:id])
