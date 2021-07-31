@@ -17,6 +17,7 @@ class MealsController < ApplicationController
 
   # GET /meals/1/edit
   def edit
+    Rails.logger.error(@meal.recipe_book.as_json)
   end
 
   # POST /meals or /meals.json

@@ -4,6 +4,19 @@
   <strong>Name:</strong>
   <%= @meal.name %>
 </p>
+<% if !@meal.recipe_book.nil? %>
+  <p>
+  <strong>Recipe Book:</strong>
+    <%= @meal.recipe_book.name %>
+  </p>
+  <% if !@meal.page_number.nil? %>
+    <p>
+    <strong>Page Number:</strong>
+      <%= @meal.page_number %>
+    </p>
+  <% end %>
+<% end %>
+
 
 <%= link_to 'Edit', edit_meal_path(@meal) %> |
 <%= link_to 'Back', meals_path %>
