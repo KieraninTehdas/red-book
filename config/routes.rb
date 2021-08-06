@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root :to => 'meal_plans#index'
   resources :meal_plans, :path => '/meal-plans'
   resources :recipe_books, :path => '/recipe-books'
   resources :meals

@@ -11,6 +11,17 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <nav>
+        <ul>
+          <li><%= link_to "Plans", meal_plans_path %></li>
+          <li><%= link_to "Meals", meals_path %></li>
+          <li><%= link_to "Recipe Books", recipe_books_path %></li>
+        </ul>
+      </nav>
+    </header>
+    <div>
+      <%= yield %>
+    </div>
   </body>
 </html>
