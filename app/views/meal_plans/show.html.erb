@@ -12,11 +12,16 @@
 
 <div>
   <strong>Meals:</strong>
+  <% if @meal_plan.meals.empty? %>
+    <p> Going to be hungry this week :( </p>
+    <%= link_to 'Why not add something to eat!', edit_meal_plan_path(@meal_plan) %>
+  <% else %>
   <ul>
     <% @meal_plan.meals.each do |meal| %>
       <li> <%= meal.name %> </li>
     <% end %>
   </ul>
+  <% end %>
 <div>
 
 <%= link_to 'Edit', edit_meal_plan_path(@meal_plan) %> |
