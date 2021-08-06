@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @meal_plan.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @meal_plan.end_date %>
+</p>
+
+<%= link_to 'Edit', edit_meal_plan_path(@meal_plan) %> |
+<%= link_to 'Back', meal_plans_path %>
