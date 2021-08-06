@@ -10,5 +10,14 @@
   <%= @meal_plan.end_date %>
 </p>
 
+<div>
+  <strong>Meals:</strong>
+  <ul>
+    <% @meal_plan.meals.each do |meal| %>
+      <li> <%= meal.name %> </li>
+    <% end %>
+  </ul>
+<div>
+
 <%= link_to 'Edit', edit_meal_plan_path(@meal_plan) %> |
 <%= link_to 'Back', meal_plans_path %>

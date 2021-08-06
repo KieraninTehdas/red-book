@@ -21,6 +21,11 @@
     <%= form.date_select :end_date %>
   </div>
 
+  <div class="field">
+    <%= form.label :meals %>
+    <%= form.select :meal_ids, options_from_collection_for_select(Meal.all, :id, :name, @meal_plan.meal_ids), { :include_hidden => false }, { :multiple => true } %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
