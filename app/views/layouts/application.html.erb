@@ -6,20 +6,12 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <header>
-      <nav>
-        <ul>
-          <li><%= link_to "Plans", meal_plans_path %></li>
-          <li><%= link_to "Meals", meals_path %></li>
-          <li><%= link_to "Recipe Books", recipe_books_path %></li>
-        </ul>
-      </nav>
-    </header>
+    <%= render "layouts/navbar" %>
     <div>
       <%= yield %>
     </div>
