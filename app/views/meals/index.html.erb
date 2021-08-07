@@ -2,6 +2,12 @@
 
 <h1>Meals</h1>
 
+<div class="list-group">
+  <% @meals.each do |meal| %>
+    <%= link_to meal.name, meal, class: "list-group-item list-group-item-action" %>
+  <% end %>
+</div>
+
 <table>
   <thead>
     <tr>
