@@ -49,6 +49,7 @@ class RecipeBooksController < ApplicationController
 
   # DELETE /recipe_books/1 or /recipe_books/1.json
   def destroy
+    @recipe_book.disassociate_meals
     @recipe_book.destroy
     respond_to do |format|
       format.html { redirect_to recipe_books_url, notice: "Recipe book was successfully destroyed." }
