@@ -49,8 +49,8 @@ RSpec.describe Meal, type: :model do
     end
 
     it 'recipe_book_name returns the correct name' do
-      meal = Meal.new({name: 'Name', recipe_book: recipe_book}) 
-      
+      meal = Meal.new({name: 'Name', recipe_book: recipe_book})
+
       expect(meal.recipe_book_name).to eq recipe_book.name
     end
   end
