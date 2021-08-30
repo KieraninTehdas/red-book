@@ -1,7 +1,7 @@
 <%= form_with(model: meal_plan) do |form| %>
   <% if meal_plan.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(meal_plan.errors.count, "error") %> prohibited this meal_plan from being saved:</h2>
+      <h2>There <%= meal_plan.errors.count == 1 ? "is" : "are" %> <%= pluralize(meal_plan.errors.count, "problem") %> with your plan:</h2>
 
       <ul>
         <% meal_plan.errors.each do |error| %>
@@ -13,12 +13,12 @@
 
   <div class="field">
     <%= form.label :start_date %>
-    <%= form.date_select :start_date %>
+    <%= form.date_select :start_date, order: [:day, :month, :year]%>
   </div>
 
   <div class="field">
     <%= form.label :end_date %>
-    <%= form.date_select :end_date %>
+    <%= form.date_select :end_date, order: [:day, :month, :year], default: Date.today + 6 %>
   </div>
 
   <div class="field">

@@ -4,13 +4,13 @@ RSpec.describe MealPlan, type: :model do
   today = Date.today
   context 'start date is before end date' do
     it 'saves successfully' do
-      expect(MealPlan.new({start_date: today - 1, end_date: today}).save).to be true
+      expect(MealPlan.new({ start_date: today - 1, end_date: today }).save).to be true
     end
   end
 
   context 'end date is before start date' do
     it 'does not save successfully' do
-      expect(MealPlan.new({start_date: today, end_date: today - 1}).save).to be false
+      expect(MealPlan.new({ start_date: today, end_date: today - 1 }).save).to be false
     end
   end
 
