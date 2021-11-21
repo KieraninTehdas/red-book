@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RecipeBook < ApplicationRecord
   has_many :meals
 
