@@ -2,34 +2,19 @@
 
 <h1>Meals</h1>
 
-<div class="list-group">
-  <% @meals.each do |meal| %>
-    <%= link_to meal.name, meal, class: "list-group-item list-group-item-action" %>
-  <% end %>
-</div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Recipe Book</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
+<table class="table">
   <tbody>
     <% @meals.each do |meal| %>
       <tr>
-        <td><%= meal.name %></td>
-        <td><%= meal.recipe_book&.name %></td>
-        <td><%= link_to 'Show', meal %></td>
-        <td><%= link_to 'Edit', edit_meal_path(meal) %></td>
-        <td><%= link_to 'Destroy', meal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to meal.name, meal %></td>
+        <td><%= link_to 'Edit', edit_meal_path(meal), class: "btn btn-secondary" %></td>
+        <td><%= link_to 'Delete',
+          meal,
+          class: "btn btn-danger",
+          method: :delete,
+          data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Meal', new_meal_path %>

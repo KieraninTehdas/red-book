@@ -7,6 +7,18 @@ RSpec.describe Meal, type: :model do
     end
   end
 
+  context 'when name is missing' do
+    it 'is not saved successfully' do
+      expect(Meal.new().save).to be false
+    end
+  end
+
+  context 'when name is empty' do
+    it 'is not saved successfully' do
+      expect(Meal.new({name: ""}).save).to be false
+    end
+  end
+
   context 'recipe book is not set' do
     context 'and page number is set' do
       it 'is not saved successfully' do

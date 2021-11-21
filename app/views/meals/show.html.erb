@@ -7,7 +7,7 @@
 <% if !@meal.recipe_book.nil? %>
   <p>
   <strong>Recipe Book:</strong>
-    <%= @meal.recipe_book.name %>
+    <%= link_to @meal.recipe_book.name, recipe_book_path(@meal.recipe_book) %>
   </p>
   <% if !@meal.page_number.nil? %>
     <p>
