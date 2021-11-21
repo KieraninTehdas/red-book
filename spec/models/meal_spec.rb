@@ -14,7 +14,7 @@ RSpec.describe Meal, type: :model do
       end
     end
 
-    it 'returns nill when recipe_book_name is called' do
+    it 'returns nil when recipe_book_name is called' do
       expect(Meal.new({name: 'Name'}).recipe_book_name).to be_nil
     end
   end
