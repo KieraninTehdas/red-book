@@ -1,6 +1,16 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Meal Plans</h1>
+<h1>This Week We Shall Mostly Be Eating</h1>
+
+<% if @current_meal_plan.nil? %>
+  <p>Nothing :(</p>
+<% else %>
+  <ul>
+    <% @current_meal_plan.meals.each do |meal| %>
+      <li><%= meal.name %></li>
+    <% end %>
+  </ul>
+<% end %>
 
 <table>
   <thead>

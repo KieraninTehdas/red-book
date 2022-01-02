@@ -7,6 +7,7 @@ class MealPlansController < ApplicationController
   # GET /meal_plans or /meal_plans.json
   def index
     @meal_plans = MealPlan.all
+    @current_meal_plan = MealPlan.current.first
   end
 
   # GET /meal_plans/1 or /meal_plans/1.json
@@ -25,33 +26,25 @@ class MealPlansController < ApplicationController
     @meal_plan = MealPlan.new(start_date: date_param_to_date(meal_plan_params, :start_date),
                               end_date: date_param_to_date(meal_plan_params, :end_date))
 
-    respond_to do |format|
-      if @meal_plan.save
+    if @meal_plan.save
 
-        meal_plan_params.fetch(:meal_ids, []).each do |meal_id|
-          meal_plan_meal = MealPlanMeal.new({ meal_id: meal_id, meal_plan: @meal_plan })
-          meal_plan_meal.save
-        end
-
-        format.html { redirect_to @meal_plan, notice: 'Meal plan was successfully created.' }
-        format.json { render :show, status: :created, location: @meal_plan }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @meal_plan.errors, status: :unprocessable_entity }
+      meal_plan_params.fetch(:meal_ids, []).each do |meal_id|
+        meal_plan_meal = MealPlanMeal.new({ meal_id: meal_id, meal_plan: @meal_plan })
+        meal_plan_meal.save
       end
+
+      redirect_to @meal_plan, notice: 'Meal plan was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /meal_plans/1 or /meal_plans/1.json
   def update
-    respond_to do |format|
-      if @meal_plan.update(meal_plan_params)
-        format.html { redirect_to @meal_plan, notice: 'Meal plan was successfully updated.' }
-        format.json { render :show, status: :ok, location: @meal_plan }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @meal_plan.errors, status: :unprocessable_entity }
-      end
+    if @meal_plan.update(meal_plan_params)
+      redirect_to @meal_plan, notice: 'Meal plan was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 

@@ -9,6 +9,9 @@ class MealPlan < ApplicationRecord
 
   scope :past, -> { where('end_date < ?', Date.today) }
   scope :future, -> { where('start_date > ?', Date.today) }
+  scope :current, -> { where('start_date <= ? and end_date >= ?', Date.today, Date.today) }
+
+  private
 
   def end_after_start?
     errors.add(:end_date, 'must be after start date') if end_date < start_date
