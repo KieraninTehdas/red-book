@@ -13,25 +13,20 @@ class MealPlansController < ApplicationController
   # GET /meal_plans/1 or /meal_plans/1.json
   def show; end
 
-  # GET /meal_plans/new
   def new
     @meal_plan = MealPlan.new
   end
 
-  # GET /meal_plans/1/edit
   def edit; end
 
-  # POST /meal_plans or /meal_plans.json
   def create
     @meal_plan = MealPlan.new(start_date: date_param_to_date(meal_plan_params, :start_date),
                               end_date: date_param_to_date(meal_plan_params, :end_date))
 
     if @meal_plan.save
-
-      meal_plan_params.fetch(:meal_ids, []).each do |meal_id|
-        meal_plan_meal = MealPlanMeal.new({ meal_id: meal_id, meal_plan: @meal_plan })
-        meal_plan_meal.save
-      end
+      MealPlanMeal.create(meal_plan_params.fetch(:meal_ids, []).map do |meal_id|
+                            { meal_id: meal_id, meal_plan: @meal_plan }
+                          end)
 
       redirect_to @meal_plan, notice: 'Meal plan was successfully created.'
     else
@@ -39,7 +34,6 @@ class MealPlansController < ApplicationController
     end
   end
 
-  # PATCH/PUT /meal_plans/1 or /meal_plans/1.json
   def update
     if @meal_plan.update(meal_plan_params)
       redirect_to @meal_plan, notice: 'Meal plan was successfully updated.'
@@ -48,7 +42,6 @@ class MealPlansController < ApplicationController
     end
   end
 
-  # DELETE /meal_plans/1 or /meal_plans/1.json
   def destroy
     @meal_plan.destroy
     respond_to do |format|
@@ -59,7 +52,6 @@ class MealPlansController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_meal_plan
     @meal_plan = MealPlan.find(params[:id])
   end
@@ -68,7 +60,6 @@ class MealPlansController < ApplicationController
     @available_meals = Meal.all
   end
 
-  # Only allow a list of trusted parameters through.
   def meal_plan_params
     params.require(:meal_plan).permit(:start_date, :end_date, meal_ids: [])
   end
