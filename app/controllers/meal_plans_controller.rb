@@ -4,13 +4,11 @@ class MealPlansController < ApplicationController
   before_action :set_meal_plan, only: %i[show edit update destroy]
   before_action :available_meals, only: %i[create edit]
 
-  # GET /meal_plans or /meal_plans.json
   def index
     @meal_plans = MealPlan.all
     @current_meal_plan = MealPlan.current.first
   end
 
-  # GET /meal_plans/1 or /meal_plans/1.json
   def show; end
 
   def new
