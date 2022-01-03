@@ -7,7 +7,13 @@
 <% else %>
   <ul>
     <% @current_meal_plan.meal_plan_meals.each do |plan_meal| %>
-      <li><%= plan_meal.meal.name %> - <% if plan_meal.eaten %> eaten <% else %> waiting <% end %></li>
+      <li><%= plan_meal.meal.name %>
+      <input type="checkbox" data-controller="checkbox" data-action="checkbox#toggle" data-checkbox-target="value"
+          <% if plan_meal.eaten %>
+            checked
+          <% end %>
+        >
+      </li>
     <% end %>
   </ul>
 <% end %>
