@@ -6,8 +6,8 @@
   <p>Nothing :(</p>
 <% else %>
   <ul>
-    <% @current_meal_plan.meals.each do |meal| %>
-      <li><%= meal.name %></li>
+    <% @current_meal_plan.meal_plan_meals.each do |plan_meal| %>
+      <li><%= plan_meal.meal.name %> - <% if plan_meal.eaten %> eaten <% else %> waiting <% end %></li>
     <% end %>
   </ul>
 <% end %>
