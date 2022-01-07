@@ -8,7 +8,11 @@
   <ul>
     <% @current_meal_plan.meal_plan_meals.each do |plan_meal| %>
       <li><%= plan_meal.meal.name %>
-      <input type="checkbox" data-controller="checkbox" data-action="checkbox#toggle" data-checkbox-target="value"
+      <input type="checkbox" 
+             data-controller="checkbox"
+             data-action="checkbox#toggle"
+             data-checkbox-target="value"
+             data-checkbox-url-value=<%= plan_meal_url(plan_meal.id) %>
           <% if plan_meal.eaten %>
             checked
           <% end %>

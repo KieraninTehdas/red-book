@@ -40,6 +40,12 @@ class MealPlansController < ApplicationController
     end
   end
 
+  def mark_meal_as_eaten
+    meal_plan_meal = meal_plan_meal.find(params[:id])
+
+    meal_plan_meal.update(eaten: true)
+  end
+
   def destroy
     @meal_plan.destroy
     respond_to do |format|
