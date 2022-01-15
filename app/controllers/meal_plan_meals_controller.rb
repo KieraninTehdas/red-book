@@ -5,5 +5,10 @@ class MealPlanMealsController < ApplicationController
     plan_meal = MealPlanMeal.find(params[:id])
 
     plan_meal.update!(eaten: params[:updated_value])
+
+    respond_to do |format|
+      format.json
+      format.js
+    end
   end
 end

@@ -11,11 +11,26 @@ export default class extends Controller {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        "X-CSRF-Token": document
-          .querySelector('meta[name="csrf-token"]')
-          .getAttribute("content"),
+        "X-CSRF-Token": this.getCsrfToken(),
       },
       body: JSON.stringify({ updated_value: updatedCheckboxValue }),
-    }).then((response) => console.log(response));
+    })
+      .then((response) => {
+        if (!response.ok) {
+          this.handleRequestFailure(updatedCheckboxValue);
+        }
+      })
+      .catch(() => this.handleRequestFailure(updatedCheckboxValue));
+  }
+
+  getCsrfToken() {
+    return document
+      .querySelector('meta[name="csrf-token"]')
+      .getAttribute("content");
+  }
+
+  handleRequestFailure(updatedCheckboxValue) {
+    document.getElementById(this.valueTarget.id).checked =
+      !updatedCheckboxValue;
   }
 }
