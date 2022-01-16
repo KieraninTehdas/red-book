@@ -13,7 +13,7 @@
 
   <% @recipe_book.meals.each do |meal| %>
     <tr>
-      <td><%= meal.name %></td>
+      <td><%= link_to meal.name, meal %></td>
       <td>122</td>
     </tr>
   <% end %>
