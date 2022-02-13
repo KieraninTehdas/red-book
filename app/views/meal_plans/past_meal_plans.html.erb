@@ -1,0 +1,40 @@
+<h1>In Past Weeks We Have Mostly Been Eating</h1>
+
+<% unless @past_meal_plans.present? %>
+  <p> Nothing :(</p>
+<% else %>
+  <div class="accordion" id="past-meals-accordion">
+    <% @past_meal_plans.each do |plan| %>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id=<%= "meal-plan-#{plan.id}-header" %>>
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target=<%= "#meal-plan-#{plan.id}" %>
+            aria-expanded=false
+            aria-controls=<%= "collapse-meal-plan-#{plan.id}" %>>
+
+            <%= "#{plan.start_date} -> #{plan.end_date}" %>
+
+          </button>
+        </h2>
+
+        <div
+          id=<%= "meal-plan-#{plan.id}" %>
+          class="accordion-collapse collapse"
+          data-bs-parent="#past-meals-accordion">
+
+          <div class="accordion-body">
+            <ul>
+              <% plan.meals.each do |meal| %>
+                <li><%= meal.name %></li>
+              <% end %>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

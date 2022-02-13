@@ -6,7 +6,7 @@ class MealPlansController < ApplicationController
 
   def index
     @meal_plans = MealPlan.all
-    @current_meal_plan = MealPlan.current.first
+    @current_meal_plan = MealPlan.current.first || MealPlan.last
   end
 
   def show; end
@@ -44,6 +44,10 @@ class MealPlansController < ApplicationController
     meal_plan_meal = meal_plan_meal.find(params[:id])
 
     meal_plan_meal.update(eaten: true)
+  end
+
+  def past_meal_plans
+    @past_meal_plans = MealPlan.past.order(end_date: :desc)
   end
 
   def destroy

@@ -2,7 +2,11 @@
 
 Rails.application.routes.draw do
   root to: 'meal_plans#index'
-  resources :meal_plans, path: '/meal-plans'
+  resources :meal_plans, path: '/meal-plans' do
+    collection do
+      get 'past', to: 'meal_plans#past_meal_plans'
+    end
+  end
   resources :recipe_books, path: '/recipe-books'
   resources :meals
 
