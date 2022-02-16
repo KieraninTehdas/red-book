@@ -3,14 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe MealPlan, type: :model do
-  today = Date.today
-  context 'start date is before end date' do
+  let(:today) { Time.zone.today }
+
+  context 'when start date is before end date' do
     it 'saves successfully' do
       expect(described_class.new({ start_date: today - 1, end_date: today }).save).to be true
     end
   end
 
-  context 'end date is before start date' do
+  context 'when end date is before start date' do
     it 'does not save successfully' do
       expect(described_class.new({ start_date: today, end_date: today - 1 }).save).to be false
     end

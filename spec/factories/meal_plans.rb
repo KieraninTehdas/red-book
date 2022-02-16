@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :meal_plan do
-    start_date { Date.today - 7 }
-    end_date { Date.today }
+    start_date { Time.zone.today - 7 }
+    end_date { Time.zone.today }
   end
 end
