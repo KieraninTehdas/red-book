@@ -6,13 +6,13 @@ RSpec.describe MealPlan, type: :model do
   today = Date.today
   context 'start date is before end date' do
     it 'saves successfully' do
-      expect(MealPlan.new({ start_date: today - 1, end_date: today }).save).to be true
+      expect(described_class.new({ start_date: today - 1, end_date: today }).save).to be true
     end
   end
 
   context 'end date is before start date' do
     it 'does not save successfully' do
-      expect(MealPlan.new({ start_date: today, end_date: today - 1 }).save).to be false
+      expect(described_class.new({ start_date: today, end_date: today - 1 }).save).to be false
     end
   end
 
@@ -23,14 +23,14 @@ RSpec.describe MealPlan, type: :model do
     let!(:plan_starting_today) { create(:meal_plan, start_date: today, end_date: today + 7) }
 
     it 'past scope returns meal plans with end date before today' do
-      result = MealPlan.past
+      result = described_class.past
 
       expect(result.count).to eq(1)
       expect(result).to contain_exactly(past_plan)
     end
 
     it 'future scope returns meal plans with start date after today' do
-      result = MealPlan.future
+      result = described_class.future
 
       expect(result.count).to eq(1)
       expect(result).to contain_exactly(future_plan)

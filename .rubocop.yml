@@ -10,5 +10,6 @@ AllCops:
     - "bin/*"
     - "vendor/bundle/**/*"
   NewCops: enable
+
 Style/Documentation:
   Enabled: false
