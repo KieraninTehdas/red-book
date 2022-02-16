@@ -1,6 +1,13 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
 AllCops:
   Exclude:
     - "db/**/*"
     - "config/**/*"
     - "script/**/*"
     - "bin/*"
+  NewCops: enable
+Style/Documentation:
+  Enabled: false
