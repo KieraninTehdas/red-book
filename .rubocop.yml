@@ -13,3 +13,12 @@ AllCops:
 
 Style/Documentation:
   Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - "db/**/*"
+    - "config/**/*"
+    - "script/**/*"
+    - "bin/*"
+    - "vendor/bundle/**/*"
+    - "spec/**/*"
