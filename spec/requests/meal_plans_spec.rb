@@ -43,6 +43,7 @@ RSpec.describe 'Meal Plans', type: :request do
 
       it "doesn't save a new meal plan" do
         expect { post meal_plans_url, params: params }.not_to change(MealPlan, :count)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end

@@ -22,14 +22,11 @@ class MealPlansController < ApplicationController
                               end_date: date_param_to_date(:end_date),
                               meal_ids: meal_plan_params.fetch(:meal_ids, []))
 
-    unless @meal_plan.valid?
-      render :new
-      return
+    if @meal_plan.save
+      redirect_to @meal_plan, notice: 'Meal plan was created successfully'
+    else
+      render :new, status: :unprocessable_entity
     end
-
-    @meal_plan.save
-
-    redirect_to @meal_plan, notice: 'Meal plan was created successfully'
   end
 
   def update
@@ -44,7 +41,7 @@ class MealPlansController < ApplicationController
 
   def destroy
     @meal_plan.destroy!
-    format.html { redirect_to meal_plans_url, notice: 'Meal plan was successfully destroyed.' }
+    redirect_to meal_plans_url, notice: 'Meal plan was successfully deleted.'
   end
 
   private
