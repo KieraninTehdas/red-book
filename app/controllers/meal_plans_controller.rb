@@ -18,26 +18,19 @@ class MealPlansController < ApplicationController
   def edit; end
 
   def create
-    @meal_plan = MealPlan.new(start_date: date_param_to_date(meal_plan_params, :start_date),
-                              end_date: date_param_to_date(meal_plan_params, :end_date))
+    @meal_plan = MealPlan.new(start_date: date_param_to_date(:start_date),
+                              end_date: date_param_to_date(:end_date),
+                              meal_ids: meal_plan_params.fetch(:meal_ids, []))
 
-    if @meal_plan.save
-      MealPlanMeal.create(meal_plan_params.fetch(:meal_ids, []).map do |meal_id|
-                            { meal_id: meal_id, meal_plan: @meal_plan }
-                          end)
+    @meal_plan.save!
 
-      redirect_to @meal_plan, notice: 'Meal plan was successfully created.'
-    else
-      render :new, status: :unprocessable_entity
-    end
+    redirect_to @meal_plan, notice: 'Meal plan was successfully created.'
   end
 
   def update
-    if @meal_plan.update(meal_plan_params)
-      redirect_to @meal_plan, notice: 'Meal plan was successfully updated.'
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    @meal_plan.update!(meal_plan_params)
+
+    redirect_to @meal_plan, notice: 'Meal plan was successfully updated.'
   end
 
   def mark_meal_as_eaten
@@ -51,11 +44,8 @@ class MealPlansController < ApplicationController
   end
 
   def destroy
-    @meal_plan.destroy
-    respond_to do |format|
-      format.html { redirect_to meal_plans_url, notice: 'Meal plan was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @meal_plan.destroy!
+    format.html { redirect_to meal_plans_url, notice: 'Meal plan was successfully destroyed.' }
   end
 
   private
@@ -72,8 +62,8 @@ class MealPlansController < ApplicationController
     params.require(:meal_plan).permit(:start_date, :end_date, meal_ids: [])
   end
 
-  def date_param_to_date(params_hash, param_name)
-    date_components = %w[1 2 3].map { |e| params_hash["#{param_name}(#{e}i)"].to_i }
+  def date_param_to_date(param_name)
+    date_components = %w[1 2 3].map { |e| meal_plan_params["#{param_name}(#{e}i)"].to_i }
     Date.new(*date_components)
   end
 end
