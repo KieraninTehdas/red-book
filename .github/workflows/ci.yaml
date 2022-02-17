@@ -16,6 +16,8 @@ jobs:
           bundler-cache: true
       - name: Set up db schema
         run: bin/rails db:schema:load
+      - name: Compile assets with Webpacker
+        run: NODE_ENV=test bundle exec rails webpacker:compile
       - name: Run tests
         run: bin/rspec
 
