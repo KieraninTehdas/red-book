@@ -30,21 +30,15 @@ class MealsController < ApplicationController
 
   def update
     @recipe_book = @meal.recipe_book
-    if meal_params[:recipe_book_name].present? && meal_params[:recipe_book_name] != @meal.recipe_book_name
-      @recipe_book = find_or_create_recipe_book(meal_params[:recipe_book_name])
-    end
 
-    Rails.logger.error(@recipe_book.as_json)
+    # TODO: searching by names seems iffy...
+    @recipe_book = find_or_create_recipe_book(meal_params[:recipe_book_name]) if recipe_book_changed?
 
-    respond_to do |format|
-      if @meal.update({ name: meal_params[:name], recipe_book: @recipe_book,
-                        page_number: meal_params[:page_number] })
-        format.html { redirect_to @meal, notice: 'Meal was successfully updated.' }
-        format.json { render :show, status: :ok, location: @meal }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @meal.errors, status: :unprocessable_entity }
-      end
+    if @meal.update({ name: meal_params[:name], recipe_book: @recipe_book,
+                      page_number: meal_params[:page_number] })
+      redirect_to @meal, notice: 'Meal was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -64,6 +58,10 @@ class MealsController < ApplicationController
     end
 
     @recipe_book
+  end
+
+  def recipe_book_changed?
+    meal_params[:recipe_book_name].present? && meal_params[:recipe_book_name] != @meal.recipe_book_name
   end
 
   # Use callbacks to share common setup or constraints between actions.

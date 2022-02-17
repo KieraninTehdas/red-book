@@ -21,8 +21,8 @@ RSpec.describe Meal, type: :model do
     end
   end
 
-  context 'recipe book is not set' do
-    context 'and page number is set' do
+  context 'when recipe book is not set' do
+    context 'when page number is set' do
       it 'is not saved successfully' do
         expect(described_class.new({ name: 'Name', page_number: 55 }).save).to be false
       end
@@ -44,19 +44,19 @@ RSpec.describe Meal, type: :model do
   context 'when recipe book is set' do
     let(:recipe_book) { create(:recipe_book) }
 
-    context 'and page number is not set' do
+    context 'when page number is not set' do
       it 'is saved successfully' do
         expect(described_class.new({ name: 'Name', recipe_book: recipe_book }).save).to be true
       end
     end
 
-    context 'and page number is non-numeric' do
+    context 'when page number is non-numeric' do
       it 'is not saved successfully' do
         expect(described_class.new({ name: 'Name', recipe_book: recipe_book, page_number: 'wc3f' }).save).to be false
       end
     end
 
-    context 'and page number is not an integer' do
+    context 'when page number is not an integer' do
       it 'is not saved successfully' do
         expect(described_class.new({ name: 'Name', recipe_book: recipe_book, page_number: '15.353' }).save).to be false
       end
