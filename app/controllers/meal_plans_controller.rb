@@ -22,21 +22,20 @@ class MealPlansController < ApplicationController
                               end_date: date_param_to_date(:end_date),
                               meal_ids: meal_plan_params.fetch(:meal_ids, []))
 
-    @meal_plan.save!
+    unless @meal_plan.valid?
+      render :new
+      return
+    end
 
-    redirect_to @meal_plan, notice: 'Meal plan was successfully created.'
+    @meal_plan.save
+
+    redirect_to @meal_plan, notice: 'Meal plan was created successfully'
   end
 
   def update
     @meal_plan.update!(meal_plan_params)
 
     redirect_to @meal_plan, notice: 'Meal plan was successfully updated.'
-  end
-
-  def mark_meal_as_eaten
-    meal_plan_meal = meal_plan_meal.find(params[:id])
-
-    meal_plan_meal.update(eaten: true)
   end
 
   def past_meal_plans
