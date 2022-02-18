@@ -14,7 +14,7 @@
   <% @recipe_book.meals.each do |meal| %>
     <tr>
       <td><%= link_to meal.name, meal %></td>
-      <td>122</td>
+      <td><%= meal.page_number %></td>
     </tr>
   <% end %>
 </table>
