@@ -17,6 +17,9 @@ Style/Documentation:
 RSpec/MultipleExpectations:
   Enabled: false
 
+RSpec/NestedGroups:
+  Enabled: false
+
 Metrics/BlockLength:
   Exclude:
     - "db/**/*"

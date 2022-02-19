@@ -22,7 +22,7 @@ class MealsController < ApplicationController
                        page_number: meal_params[:page_number] })
 
     if @meal.save
-      redirect_to action: 'index', notice: 'Meal was successfully created.'
+      redirect_to action: 'index', notice: 'Meal was successfully created'
     else
       render :new, status: :unprocessable_entity
     end
@@ -36,7 +36,7 @@ class MealsController < ApplicationController
 
     if @meal.update({ name: meal_params[:name], recipe_book: @recipe_book,
                       page_number: meal_params[:page_number] })
-      redirect_to @meal, notice: 'Meal was successfully updated.'
+      redirect_to @meal, notice: 'Meal was successfully updated'
     else
       render :edit, status: :unprocessable_entity
     end
