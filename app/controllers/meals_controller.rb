@@ -49,11 +49,11 @@ class MealsController < ApplicationController
 
   private
 
-  def find_or_create_recipe_book(_recipe_book_name)
-    @recipe_book = RecipeBook.find_by(name: meal_params[:recipe_book_name])
+  def find_or_create_recipe_book(recipe_book_name)
+    @recipe_book = RecipeBook.find_by(name: recipe_book_name)
 
     if @recipe_book.blank?
-      @recipe_book = RecipeBook.new({ name: meal_params[:recipe_book_name] })
+      @recipe_book = RecipeBook.new({ name: recipe_book_name })
       @recipe_book.save!
     end
 

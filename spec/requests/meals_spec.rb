@@ -71,4 +71,26 @@ RSpec.describe 'Meals', type: :request do
       end
     end
   end
+
+  describe 'update' do
+    let!(:meal) { create(:meal) }
+    let(:update_url) { "#{meals_url}/#{meal.id}" }
+
+    context 'when updating recipe book' do
+      context 'when book exists' do
+        let(:recipe_book) { create(:recipe_book) }
+
+        it 'updates the recipe book' do
+          params = { meal: { name: meal.name, recipe_book_name: recipe_book.name } }
+          initial_recipe_book_count = RecipeBook.count
+
+          put update_url, params: params
+
+          meal.reload
+          expect(meal.recipe_book).to eq(recipe_book)
+          expect(RecipeBook.count).to eq(initial_recipe_book_count)
+        end
+      end
+    end
+  end
 end
