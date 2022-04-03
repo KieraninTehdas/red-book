@@ -16,9 +16,9 @@
     <%= form.text_field :name %>
   </div>
 
-  <div class="field">
+  <div class="field" data-controller="autocomplete" data-autocomplete-url-value=<%= search_recipe_books_path %>>
     <%= form.label :recipe_book %>
-    <%= form.text_field :recipe_book_name %>
+    <%= form.text_field :recipe_book_name, data: { action: "keydown->autocomplete#search", "autocomplete-target": "input" }%>
   </div>
 
   <div class="field">
