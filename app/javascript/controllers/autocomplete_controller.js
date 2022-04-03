@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["input"];
+  static targets = ["input", "results"];
   static values = { url: String };
 
   initialize() {
@@ -28,8 +28,16 @@ export default class extends Controller {
     const url = new URL(`http://${window.location.host}${this.urlValue}`);
     url.searchParams.append("name", queryString);
 
-    const result = await fetch(url.toString()).then((res) => res.json());
+    const results = await fetch(url.toString()).then((res) => res.json());
 
-    console.log(result);
+    const options = results.map(
+      (book) =>
+        `<option value=${book.id} label="${book.name}">${book.name}</option>`
+    );
+
+    console.log(this.resultsTarget);
+    console.log(options);
+    this.resultsTarget.innerHTML = options;
+    console.log(this.resultsTarget);
   }
 }
