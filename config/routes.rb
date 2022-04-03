@@ -7,7 +7,11 @@ Rails.application.routes.draw do
       get 'past', to: 'meal_plans#past_meal_plans'
     end
   end
-  resources :recipe_books, path: '/recipe-books'
+  resources :recipe_books, path: '/recipe-books' do
+    collection do
+      get 'search', to: 'recipe_books#search'
+    end
+  end
   resources :meals
 
   patch 'meal-plan-meals/:id', to: 'meal_plan_meals#update_eaten_status'

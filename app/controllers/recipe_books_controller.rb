@@ -11,6 +11,17 @@ class RecipeBooksController < ApplicationController
   # GET /recipe_books/1 or /recipe_books/1.json
   def show; end
 
+  def search
+    book_name = RecipeBook.arel_table[:name]
+    query_string = params[:name]
+
+    return render json: [] if query_string.blank?
+
+    sanitized_query_string = query_string.gsub(/[%_,]/, { '%': '', _: '', ',': '\\,' })
+
+    render json: RecipeBook.where(book_name.matches("%#{sanitized_query_string}%"))
+  end
+
   # GET /recipe_books/new
   def new
     @recipe_book = RecipeBook.new
