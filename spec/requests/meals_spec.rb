@@ -8,9 +8,9 @@ RSpec.describe 'Meals', type: :request do
       let(:params) { { meal: { name: 'Food' } } }
 
       it 'saves a new meal' do
-        expect { post meals_url, params: params }.to change(Meal, :count).by(1)
+        expect { post meals_path, params: params }.to change(Meal, :count).by(1)
       end
-
+        .id
       it 'redirects to meals index' do
         post meals_url, params: params
 
@@ -34,16 +34,13 @@ RSpec.describe 'Meals', type: :request do
       end
     end
 
-    context 'when new receipe book is specified' do
-      let(:params) { { meal: { name: 'Food', recipe_book_name: 'New Book' } } }
+    context 'when receipe book is specified' do
+      let(:recipe_book) { create(:recipe_book) }
+      let(:params) { { meal: { name: 'Food', recipe_book_id: recipe_book.id } } }
 
       it 'saves a new meal' do
         expect { post meals_url, params: params }.to change(Meal, :count).by(1)
-        expect(Meal.last.recipe_book.name).to eq('New Book')
-      end
-
-      it 'saves a new book' do
-        expect { post meals_url, params: params }.to change(RecipeBook, :count).by(1)
+        expect(Meal.last.recipe_book).to eq(recipe_book)
       end
 
       context 'when page number is specified' do
@@ -56,40 +53,47 @@ RSpec.describe 'Meals', type: :request do
         end
       end
     end
-
-    context 'when existing recipe book is specified' do
-      let!(:recipe_book) { create(:recipe_book) }
-      let(:params) { { meal: { name: 'Food', recipe_book_name: recipe_book.name } } }
-
-      it 'saves a new meal' do
-        expect { post meals_url, params: params }.to change(Meal, :count).by(1)
-        expect(Meal.last.recipe_book).to eq(recipe_book)
-      end
-
-      it "doesn't save a new book" do
-        expect { post meals_url, params: params }.not_to change(RecipeBook, :count)
-      end
-    end
   end
 
-  describe 'update' do
-    let!(:meal) { create(:meal) }
-    let(:update_url) { "#{meals_url}/#{meal.id}" }
+  describe '#update' do
+    let(:recipe_book) { create(:recipe_book) }
 
-    context 'when updating recipe book' do
-      context 'when book exists' do
-        let(:recipe_book) { create(:recipe_book) }
+    context 'when adding a book and page number' do
+      it 'updates the specified fields' do
+        meal = create(:meal)
+        params = { meal: { name: meal.name, recipe_book_id: recipe_book.id, page_number: 12 } }
 
-        it 'updates the recipe book' do
-          params = { meal: { name: meal.name, recipe_book_name: recipe_book.name } }
-          initial_recipe_book_count = RecipeBook.count
+        put meal_path(meal), params: params
 
-          put update_url, params: params
+        meal.reload
+        expect(meal.recipe_book).to eq(recipe_book)
+        expect(meal.page_number).to eq(12)
+      end
+    end
 
-          meal.reload
-          expect(meal.recipe_book).to eq(recipe_book)
-          expect(RecipeBook.count).to eq(initial_recipe_book_count)
-        end
+    context 'when removing book and page number' do
+      it 'updates the specified fields' do
+        meal = create(:meal, :with_recipe_book)
+        params = { meal: { name: meal.name, recipe_book_id: nil, page_number: '' } }
+
+        put meal_path(meal), params: params
+
+        meal.reload
+        expect(meal.recipe_book).to be_nil
+        expect(meal.page_number).to be_nil
+      end
+    end
+
+    context 'when removing recipe book but not page number' do
+      it 'does not update' do
+        meal = create(:meal, :with_recipe_book)
+        params = { meal: { name: meal.name, recipe_book_id: '', page_number: '12' } }
+
+        put meal_path(meal), params: params
+
+        meal.reload
+        expect(meal.recipe_book).to eq(meal.recipe_book)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end

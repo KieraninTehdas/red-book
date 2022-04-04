@@ -16,10 +16,7 @@ class MealsController < ApplicationController
   def edit; end
 
   def create
-    @recipe_book = find_or_create_recipe_book(meal_params[:recipe_book_name]) if meal_params[:recipe_book_name].present?
-
-    @meal = Meal.new({ name: meal_params[:name], recipe_book: @recipe_book,
-                       page_number: meal_params[:page_number] })
+    @meal = Meal.new(meal_params)
 
     if @meal.save
       redirect_to action: 'index', notice: 'Meal was successfully created'
@@ -29,13 +26,7 @@ class MealsController < ApplicationController
   end
 
   def update
-    @recipe_book = @meal.recipe_book
-
-    # TODO: searching by names seems iffy...
-    @recipe_book = find_or_create_recipe_book(meal_params[:recipe_book_name]) if recipe_book_changed?
-
-    if @meal.update({ name: meal_params[:name], recipe_book: @recipe_book,
-                      page_number: meal_params[:page_number] })
+    if @meal.update(meal_params)
       redirect_to @meal, notice: 'Meal was successfully updated'
     else
       render :edit, status: :unprocessable_entity
@@ -49,28 +40,11 @@ class MealsController < ApplicationController
 
   private
 
-  def find_or_create_recipe_book(recipe_book_name)
-    @recipe_book = RecipeBook.find_by(name: recipe_book_name)
-
-    if @recipe_book.blank?
-      @recipe_book = RecipeBook.new({ name: recipe_book_name })
-      @recipe_book.save!
-    end
-
-    @recipe_book
-  end
-
-  def recipe_book_changed?
-    meal_params[:recipe_book_name].present? && meal_params[:recipe_book_name] != @meal.recipe_book_name
-  end
-
-  # Use callbacks to share common setup or constraints between actions.
   def set_meal
     @meal = Meal.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def meal_params
-    params.require(:meal)
+    params.require(:meal).permit(:name, :recipe_book_id, :page_number)
   end
 end

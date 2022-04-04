@@ -16,10 +16,9 @@
     <%= form.text_field :name %>
   </div>
 
-  <div class="field" data-controller="autocomplete" data-autocomplete-url-value=<%= search_recipe_books_path %>>
+  <div class="field">
     <%= form.label :recipe_book %>
-    <%= form.select:recipe_book_name, { "data-action": "keydown->autocomplete#search", "data-autocomplete-target": "input", list: "recipe-books" }%>
-    <datalist id="recipe-books" data-autocomplete-target="results"></datalist>
+    <%= form.select :recipe_book_id, RecipeBook.all.collect { |b| [ b.name, b.id ] }, { include_blank: "None" } %>
   </div>
 
   <div class="field">
