@@ -87,12 +87,13 @@ RSpec.describe 'Meals', type: :request do
     context 'when removing recipe book but not page number' do
       it 'does not update' do
         meal = create(:meal, :with_recipe_book)
+        initial_recipe_book = meal.recipe_book
         params = { meal: { name: meal.name, recipe_book_id: '', page_number: '12' } }
 
         put meal_path(meal), params: params
 
         meal.reload
-        expect(meal.recipe_book).to eq(meal.recipe_book)
+        expect(meal.recipe_book).to eq(initial_recipe_book)
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
