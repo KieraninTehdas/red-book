@@ -11,12 +11,16 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
+  <fieldset class="mb-3">
+    <div class="field">
+      <%= form.label :name, class: "form-label" %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+  </fieldset>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <fieldset class="mb-3">
+    <div class="actions">
+      <%= form.submit class: "btn btn-primary" %>
+    </div>
+  </fieldset>
 <% end %>
