@@ -1,8 +1,6 @@
 <%= form_with(model: meal) do |form| %>
   <% if meal.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(meal.errors.count, "error") %> prohibited this meal from being saved:</h2>
-
+    <div id="error_explanation" class="alert alert-danger">
       <ul>
         <% meal.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -29,6 +27,15 @@
       <%= form.label :page_number, class: "form-label" %>
       <%= form.text_field :page_number, class: "form-control" %>
     </div>
+
+    <div class="field mb-3">
+      <%= form.label :ingredients, class: "form-label" %>
+      <%= form.text_area :ingredients, class: "form-control" %>
+      <div class="form-text">
+        Enter ingredients separate by a comma or newline
+      </div>
+    </div>
+
   </fieldset>
 
   <fieldset class="mb-3">

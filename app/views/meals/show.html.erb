@@ -4,16 +4,21 @@
   <strong>Name:</strong>
   <%= @meal.name %>
 </p>
-<% if !@meal.recipe_book.nil? %>
+<% unless @meal.recipe_book.nil? %>
   <p>
   <strong>Recipe Book:</strong>
     <%= link_to @meal.recipe_book.name, recipe_book_path(@meal.recipe_book) %>
   </p>
-  <% if !@meal.page_number.nil? %>
+  <% unless @meal.page_number.nil? %>
     <p>
     <strong>Page Number:</strong>
       <%= @meal.page_number %>
     </p>
+  <% end %>
+
+  <% unless @meal.ingredients.blank? %>
+    <strong>Ingredients</strong>
+    <div><%= simple_format(@meal.ingredients) %></div>
   <% end %>
 <% end %>
 

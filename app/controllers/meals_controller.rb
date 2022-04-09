@@ -27,7 +27,7 @@ class MealsController < ApplicationController
 
   def update
     if @meal.update(meal_params)
-      redirect_to @meal, notice: 'Meal was successfully updated'
+      redirect_to action: 'index', notice: 'Meal was successfully updated'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -45,6 +45,6 @@ class MealsController < ApplicationController
   end
 
   def meal_params
-    params.require(:meal).permit(:name, :recipe_book_id, :page_number)
+    params.require(:meal).permit(:name, :recipe_book_id, :page_number, :ingredients)
   end
 end
