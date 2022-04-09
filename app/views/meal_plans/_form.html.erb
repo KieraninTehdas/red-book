@@ -1,9 +1,7 @@
 <%= form_with(model: meal_plan) do |form| %>
   <% if meal_plan.errors.any? %>
     <div id="error_explanation">
-      <h2>There <%= meal_plan.errors.count == 1 ? "is" : "are" %> <%= pluralize(meal_plan.errors.count, "problem") %> with your plan:</h2>
-
-      <ul>
+      <ul class="alert alert-danger">
         <% meal_plan.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
