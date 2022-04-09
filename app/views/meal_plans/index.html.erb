@@ -5,11 +5,12 @@
 <% if @current_meal_plan.nil? %>
   <p>Nothing :(</p>
 <% else %>
-  <ul>
+  <ul class="list-group mb-3">
     <% @current_meal_plan.meal_plan_meals.each do |plan_meal| %>
-      <li><%= plan_meal.meal.name %>
+      <li class="list-group-item"><%= plan_meal.meal.name %>
       <input
         id=<%= "checkbox-plan-meal-#{plan_meal.id}" %>
+             class="form-check-input ms-1"
              type="checkbox"
              data-controller="checkbox"
              data-action="checkbox#toggle"
