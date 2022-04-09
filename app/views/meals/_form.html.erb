@@ -19,7 +19,10 @@
 
     <div class="field mb-3">
       <%= form.label :recipe_book, class: "form-label" %>
-      <%= form.select :recipe_book_id, RecipeBook.all.collect { |b| [ b.name, b.id ] }, { include_blank: "None" }, { class: "form-select" } %>
+      <%= form.select :recipe_book_id,
+        RecipeBook.all.collect { |b| [ b.name, b.id ] },
+        { include_blank: "None" },
+        { class: "form-select" } %>
     </div>
 
     <div class="field mb-3">
