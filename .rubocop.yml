@@ -23,6 +23,9 @@ RSpec/NestedGroups:
 RSpec/ExampleLength:
   Enabled: false
 
+Rails/SkipsModelValidations:
+  Enabled: false
+
 Metrics/BlockLength:
   Exclude:
     - "db/**/*"
