@@ -53,6 +53,17 @@ RSpec.describe 'Meals', type: :request do
         end
       end
     end
+
+    context 'when ingredients are specified' do
+      it 'saves them' do
+        ingredients = 'here\n is a\n list of, stuff'
+        params = { meal: { name: 'Food', ingredients: ingredients } }
+
+        post meals_url, params: params
+
+        expect(Meal.last.ingredients).to eq(ingredients)
+      end
+    end
   end
 
   describe '#update' do
