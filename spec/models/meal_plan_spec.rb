@@ -19,6 +19,23 @@ RSpec.describe MealPlan, type: :model do
     end
   end
 
+  describe '#complete?' do
+    let(:meal_plan) { build(:meal_plan) }
+
+    it 'returns true when all meals are eaten' do
+      meal_plan.meal_plan_meals.build(meal: build(:meal), eaten: true)
+
+      expect(meal_plan.complete?).to be true
+    end
+
+    it 'returns false when not all meals are eaten' do
+      meal_plan.meal_plan_meals.build(meal: build(:meal), eaten: true)
+      meal_plan.meal_plan_meals.build(meal: build(:meal), eaten: false)
+
+      expect(meal_plan.complete?).to be false
+    end
+  end
+
   context 'when there are multiple plans' do
     let!(:past_plan) { create(:meal_plan, start_date: today - 10, end_date: today - 5) }
     let!(:future_plan) { create(:meal_plan, start_date: today + 3, end_date: today + 10) }

@@ -11,6 +11,10 @@ class MealPlan < ApplicationRecord
   scope :future, -> { where('start_date > ?', Time.zone.today) }
   scope :current, -> { where('start_date <= ? and end_date >= ?', Time.zone.today, Time.zone.today) }
 
+  def complete?
+    meal_plan_meals.map { |plan_meal| plan_meal.eaten? }.all?
+  end
+
   private
 
   def end_after_start?
