@@ -23,6 +23,13 @@
       </li>
     <% end %>
   </ul>
+
+  <div data-controller="populate-input" data-populate-input-url-value="somewhere">
+    <button class="btn btn-primary mb-3" data-action="populate-input#populateInput">Generate Shopping List</button>
+    <div class="mb-3">
+      <textarea id="shopping-list-input" class="form-control" data-populate-input-target="input" style="display:none;"></textarea>
+    </div>
+  </div>
 <% end %>
 
 <%= link_to 'Past Weeks', past_meal_plans_path %>
