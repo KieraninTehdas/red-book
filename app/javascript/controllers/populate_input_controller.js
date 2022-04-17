@@ -6,7 +6,14 @@ export default class extends Controller {
 
   populateInput() {
     console.log(this.urlValue);
-    this.inputTarget.value = "Some Stuff";
-    this.inputTarget.style.display = "inline";
+
+    fetch(this.urlValue, {
+      headers: { "Content-Type": "application/json" },
+    }).then((response) => {
+      response.json().then((body) => {
+        this.inputTarget.value = body;
+        this.inputTarget.style.display = "inline";
+      });
+    });
   }
 }

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MealPlansController < ApplicationController
-  before_action :set_meal_plan, only: %i[show edit update destroy]
+  before_action :set_meal_plan, only: %i[show edit update destroy generate_shopping_list]
   before_action :available_meals, only: %i[create edit]
 
   def index
@@ -42,6 +42,10 @@ class MealPlansController < ApplicationController
   def destroy
     @meal_plan.destroy!
     redirect_to meal_plans_url, notice: 'Meal plan was successfully deleted.'
+  end
+
+  def generate_shopping_list
+    render json: @meal_plan.meals.map { |meal| meal.ingredients }.join("\n").to_json
   end
 
   private

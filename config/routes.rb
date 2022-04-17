@@ -6,6 +6,9 @@ Rails.application.routes.draw do
     collection do
       get 'past', to: 'meal_plans#past_meal_plans'
     end
+    member do
+      get 'shopping-list', to: 'meal_plans#generate_shopping_list'
+    end
   end
   resources :recipe_books, path: '/recipe-books' do
     collection do
@@ -15,6 +18,4 @@ Rails.application.routes.draw do
   resources :meals
 
   patch 'meal-plan-meals/:id', to: 'meal_plan_meals#update_eaten_status'
-
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

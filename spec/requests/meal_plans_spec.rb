@@ -48,6 +48,21 @@ RSpec.describe 'Meal Plans', type: :request do
     end
   end
 
+  describe '#generate_shopping_list' do
+    it 'joins and de-duplicates ingredients' do
+      a_meal = build(:meal)
+      a_meal.ingredients = "pepper\r\nsalt\r\nbread"
+      another_meal = build(:meal)
+      another_meal.ingredients = "pepper\r\ncarrots 100g\r\nmince ~500g"
+      meal_plan = create(:meal_plan)
+      meal_plan.update!(meals: [a_meal, another_meal])
+
+      get shopping_list_meal_plan_path(meal_plan)
+
+      expect(response.body).to eq([a_meal.ingredients, another_meal.ingredients].join("\n").to_json)
+    end
+  end
+
   def date_to_date_select_param(date, param_name)
     { "#{param_name}(1i)": date.year, "#{param_name}(2i)": date.month, "#{param_name}(3i)": date.day }
   end

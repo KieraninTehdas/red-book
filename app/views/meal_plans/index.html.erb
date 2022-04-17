@@ -24,7 +24,7 @@
     <% end %>
   </ul>
 
-  <div data-controller="populate-input" data-populate-input-url-value="somewhere">
+  <div data-controller="populate-input" data-populate-input-url-value=<%= shopping_list_meal_plan_path(@current_meal_plan) %>>
     <button class="btn btn-primary mb-3" data-action="populate-input#populateInput">Generate Shopping List</button>
     <div class="mb-3">
       <textarea id="shopping-list-input" class="form-control" data-populate-input-target="input" style="display:none;"></textarea>
