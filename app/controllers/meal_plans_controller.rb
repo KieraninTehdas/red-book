@@ -45,7 +45,7 @@ class MealPlansController < ApplicationController
   end
 
   def generate_shopping_list
-    render json: @meal_plan.meals.map { |meal| meal.ingredients }.join("\n").to_json
+    render json: @meal_plan.meals.map(&:ingredients).join("\n").to_json
   end
 
   private
