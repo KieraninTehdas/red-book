@@ -15,13 +15,11 @@ export default class extends Controller {
     if (this.alertPlaceholderTarget.childElementCount > 0) {
       return;
     }
+
     const wrapper = document.createElement("div");
-    wrapper.innerHTML =
-      '<div class="alert alert-' +
-      type +
-      ' alert-dismissible" role="alert">' +
-      message +
-      '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+    wrapper.innerHTML = `<div class="alert alert-${type} alert-dismissible" role="alert">
+        ${message}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
     this.alertPlaceholderTarget.append(wrapper);
   }
 }
