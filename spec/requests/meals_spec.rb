@@ -56,8 +56,9 @@ RSpec.describe 'Meals', type: :request do
 
     context 'when ingredients are specified' do
       it 'saves them' do
-        ingredients = 'here\n is a\n list of, stuff'
-        params = { meal: { name: 'Food', ingredients: ingredients } }
+        additional_whitespace = "\r\n\r\n\r\n\r\n\r\n     "
+        ingredients = "here\r\n is a\r\n list of, stuff"
+        params = { meal: { name: 'Food', ingredients: ingredients + additional_whitespace } }
 
         post meals_url, params: params
 

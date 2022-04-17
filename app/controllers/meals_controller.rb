@@ -45,6 +45,10 @@ class MealsController < ApplicationController
   end
 
   def meal_params
-    params.require(:meal).permit(:name, :recipe_book_id, :page_number, :ingredients)
+    cleaned_params = params.require(:meal).permit(:name, :recipe_book_id, :page_number, :ingredients)
+
+    cleaned_params[:ingredients] = cleaned_params[:ingredients].strip if cleaned_params[:ingredients]
+
+    cleaned_params
   end
 end
