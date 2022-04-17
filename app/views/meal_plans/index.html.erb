@@ -26,8 +26,12 @@
 
   <div data-controller="populate-input" data-populate-input-url-value=<%= shopping_list_meal_plan_path(@current_meal_plan) %>>
     <button class="btn btn-primary mb-3" data-action="populate-input#populateInput">Generate Shopping List</button>
-    <div class="mb-3">
-      <textarea id="shopping-list-input" class="form-control" data-populate-input-target="input" style="display:none;"></textarea>
+    <div class="mb-3" style="display:none;" data-populate-input-target="inputContainer" data-controller="clipboard">
+      <textarea id="shopping-list-input" class="form-control mb-3" data-populate-input-target="input" data-clipboard-target="source"></textarea>
+
+      <button class="btn btn-secondary mb-3" data-action="clipboard#copy">Copy To Clipboard</button>
+
+      <div id="alert-placeholder" data-clipboard-target="alertPlaceholder"></div>
     </div>
   </div>
 <% end %>
