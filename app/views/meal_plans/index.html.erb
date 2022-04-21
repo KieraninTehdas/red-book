@@ -5,6 +5,9 @@
 <% if @current_meal_plan.nil? %>
   <p>Nothing :(</p>
 <% else %>
+  <div class="ms-1">
+    <p><%= @current_meal_plan.start_date.to_formatted_s(:long) %> --> <%= @current_meal_plan.end_date.to_formatted_s(:long) %></p>
+  </div>
   <ul class="list-group mb-3">
     <% @current_meal_plan.meal_plan_meals.each do |plan_meal| %>
       <li class="list-group-item"><%= plan_meal.meal.name %>
