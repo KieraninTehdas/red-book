@@ -43,6 +43,14 @@
   <fieldset class="mb-3">
     <div class="form-group">
       <%= form.submit class: "btn btn-primary" %>
+      <% unless @meal_plan.new_record? %>
+        <%= link_to "Delete",
+          @meal_plan,
+          class: "btn btn-danger",
+          method: :delete,
+          data: { confirm: "Are you sure?" }
+        %>
+      <% end %>
     </div>
   </fieldset>
 <% end %>
