@@ -1,23 +1,23 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @recipe_book.name %>
-</p>
+<h2><%= @recipe_book.name %></h2>
 
-<table>
-  <tr>
-    <th>Meal</th>
-    <th>Page Number</th>
-  </tr>
-
-  <% @recipe_book.meals.each do |meal| %>
+<% if @recipe_book.meals.present? %>
+  <table class="table">
     <tr>
-      <td><%= link_to meal.name, meal %></td>
-      <td><%= meal.page_number %></td>
+      <th>Meal</th>
+      <th>Page Number</th>
     </tr>
-  <% end %>
-</table>
+
+    <% @recipe_book.meals.each do |meal| %>
+      <tr>
+        <td><%= link_to meal.name, meal %></td>
+        <td><%= meal.page_number %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
 
 <%= link_to 'Edit', edit_recipe_book_path(@recipe_book) %> |
 <%= link_to 'Back', recipe_books_path %>
