@@ -18,9 +18,11 @@ class MealPlansController < ApplicationController
   def edit; end
 
   def create
-    @meal_plan = MealPlan.new(start_date: date_param_to_date(:start_date),
-                              end_date: date_param_to_date(:end_date),
-                              meal_ids: meal_plan_params.fetch(:meal_ids, []))
+    @meal_plan = MealPlan.new(
+      start_date: date_param_to_date(:start_date),
+      end_date: date_param_to_date(:end_date),
+      meal_ids: meal_plan_params.fetch(:meal_ids, [])
+    )
 
     if @meal_plan.save
       redirect_to @meal_plan, notice: 'Meal plan was created successfully'
