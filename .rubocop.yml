@@ -11,6 +11,9 @@ AllCops:
     - "vendor/bundle/**/*"
   NewCops: enable
 
+StringLiterals:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 
