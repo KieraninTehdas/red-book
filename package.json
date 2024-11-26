@@ -1,6 +1,9 @@
 {
   "name": "mealplan",
   "private": true,
+  "engines": {
+    "node": ">=18.20.5 <19.0.0"
+  },
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
     "@hotwired/stimulus-webpack-helpers": "^1.0.1",
